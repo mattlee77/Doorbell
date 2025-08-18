@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doorbell Listener</title>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = { /* Your config */ };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    database.ref("doorbell").on("value", (snapshot) => {
+      if (snapshot.val()?.ring) {
+        alert("🚨 Someone is at the door!");
+        database.ref("doorbell").update({ ring: false }); // Reset
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Doorbell Listener (Keep this tab open)</h1>
+</body>
+</html>
