@@ -9,7 +9,9 @@
 <body>
   <h1>Doorbell Listener (Keep this tab open)</h1>
   <audio id="doorbellSound" src="doorbell.wav" preload="auto"></audio>
-  
+  <div id="alert" style="display: none; background: #FF4136; color: white; padding: 10px;">
+    🚨 Someone is at the door!
+  </div>
   <script>
     const firebaseConfig = { apiKey: "AIzaSyA4CgSl4dc6c-Gnex8wcDNuFZTU2ACaXv8",
   authDomain: "doorbell-961eb.firebaseapp.com",
@@ -26,13 +28,14 @@
     
   firebase.database().ref("doorbell").on("value", (snapshot) => {
       if (snapshot.val()?.ring) {
-                // Show alert (optional)
-        //alert("🚨 Someone is at the door!");
         
         // Play sound
         doorbellSound.play().catch(e => console.error("Audio error:", e));
         
-
+        // Show visual alert
+        const alertDiv = document.getElementById("alert");
+        alertDiv.style.display = "block";
+        setTimeout(() => alertDiv.style.display = "none", 3000); // Hide after 3 seconds
 
         // Reset doorbell
         firebase.database().ref("doorbell").update({ ring: false });
