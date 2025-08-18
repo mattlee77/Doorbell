@@ -4,6 +4,12 @@
   <title>Doorbell Listener</title>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+  
+</head>
+<body>
+  <h1>Doorbell Listener (Keep this tab open)</h1>
+  <audio id="doorbellSound" src="doorbell.wav" preload="auto"></audio>
+  
   <script>
     const firebaseConfig = { apiKey: "AIzaSyA4CgSl4dc6c-Gnex8wcDNuFZTU2ACaXv8",
   authDomain: "doorbell-961eb.firebaseapp.com",
@@ -13,18 +19,24 @@
   messagingSenderId: "960442463106",
   appId: "1:960442463106:web:d5daa55b166315c02ad59b",
   measurementId: "G-DNFHDXH2E7" };
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+  firebase.initializeApp(firebaseConfig);
 
-    database.ref("doorbell").on("value", (snapshot) => {
+  // Play sound when doorbell rings
+  const doorbellSound = document.getElementById("doorbellSound");
+    
+  firebase.database().ref("doorbell").on("value", (snapshot) => {
       if (snapshot.val()?.ring) {
+        // Play sound
+        doorbellSound.play().catch(e => console.error("Audio error:", e));
+        
+        // Show alert (optional)
         alert("🚨 Someone is at the door!");
-        database.ref("doorbell").update({ ring: false }); // Reset
+
+        // Reset doorbell
+        firebase.database().ref("doorbell").update({ ring: false });
       }
     });
+  
   </script>
-</head>
-<body>
-  <h1>Doorbell Listener (Keep this tab open)</h1>
 </body>
 </html>
