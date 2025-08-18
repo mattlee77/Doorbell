@@ -27,7 +27,7 @@
   firebase.database().ref("doorbell").on("value", (snapshot) => {
       if (snapshot.val()?.ring) {
                 // Show alert (optional)
-        alert("🚨 Someone is at the door!");
+        //alert("🚨 Someone is at the door!");
         
         // Play sound
         doorbellSound.play().catch(e => console.error("Audio error:", e));
