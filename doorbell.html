@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Doorbell</title>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <h1>Ring the Doorbell!</h1>
+  <button id="ringButton">🔔 Press Here</button>
+  <p>Or scan the QR code to notify me.</p>
+
+  <script>
+    // Initialize Firebase with your config
+    const firebaseConfig = {
+  apiKey: "AIzaSyA4CgSl4dc6c-Gnex8wcDNuFZTU2ACaXv8",
+  authDomain: "doorbell-961eb.firebaseapp.com",
+  databaseURL: "https://doorbell-961eb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "doorbell-961eb",
+  storageBucket: "doorbell-961eb.firebasestorage.app",
+  messagingSenderId: "960442463106",
+  appId: "1:960442463106:web:d5daa55b166315c02ad59b",
+  measurementId: "G-DNFHDXH2E7"
+};
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Ring the doorbell
+    document.getElementById("ringButton").addEventListener("click", () => {
+      database.ref("doorbell").set({
+        ring: true,
+        timestamp: new Date().toISOString()
+      });
+      alert("Notification sent!");
+    });
+  </script>
+</body>
+</html>
