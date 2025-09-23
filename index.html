@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset = "utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QR Doorbell</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QR Doorbell</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <div class="container">
-  <h1>Ring the Doorbell!</h1>
-  <button id="ringButton">🔔 Press Here</button>
-  <!-- <p>Or scan the QR code to notify me.</p> -->
-  </div>
+    <div class="container">
+        <h1>Esther Chan</h1>
+        <h2>Artist's Open Studio</h2>
+        <button id="ringButton">Press to ring doorbell</button>
+        <p class = "hidden message">Thanks, please wait</p>
+        <!-- Thanks, please wait -->
+        <!-- <p>Or scan the QR code to notify me.</p> -->
+    </div>
   <script>
     // Initialize Firebase with your config
     const firebaseConfig = {
@@ -35,8 +39,14 @@
       database.ref("doorbell").set({
         ring: true,
         timestamp: new Date().toISOString()
-      });
-      //alert("Notification sent!");
+      }); //alert("Notification sent!")
+    });
+
+        // Post ring text
+    document.getElementById("ringButton").addEventListener("click", () => {
+        const msg = document.querySelector(".message");
+        console.log("post ring text")
+        msg.classList.remove("hidden");
     });
   </script>
 </body>
